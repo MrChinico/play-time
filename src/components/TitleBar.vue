@@ -40,7 +40,12 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
-@Component
+@Component({
+  computed: mapState({
+    count: (state) => state.count,
+    countAlias: 'count',
+  })
+})
 export default class Main extends Vue {
   public appName = null;
   public mounted() {
