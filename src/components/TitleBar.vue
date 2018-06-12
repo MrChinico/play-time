@@ -1,7 +1,7 @@
 <template lang="pug">
   div#title-bar
     div.left left
-    div.title {{appName}}
+    div.title {{countAlias}}{{appName}}
     div.right
       div
       div
@@ -39,11 +39,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { mapState } from 'vuex';
 
 @Component({
   computed: mapState({
-    count: (state) => state.count,
-    countAlias: 'count',
+    countAlias: state => state.baseInfo.appName,
   })
 })
 export default class Main extends Vue {

@@ -21,7 +21,7 @@ import { Component, Vue } from 'vue-property-decorator';
 @Component
 export default class Main extends Vue {
   public navigations = [
-    {name: '本地音频', path:'/'},
+    {name: '本地音频', path:'/local-audio'},
     {name: '本地视频', path:'/'},
     {name: '网络音频', path:'/network-audio'},
     {name: '网络视频', path:'/'},

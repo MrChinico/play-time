@@ -1,9 +1,14 @@
 <template lang="pug">
   div#root
     TitleBar
-    div.window(ondragend="drop(event)")
+    div.window(
+      @drop="openDropFiles($event)"
+      @dragover="tesa($event)"
+      ref="window")
       Navigation
       router-view
+      div(ref="ad") 123
+    Player(ref="player")
 </template>
 
 <style lang="stylus">
@@ -37,27 +42,76 @@ a
     background #fff
     display flex 
     flex 1
+  .player
+    // background #ff0000
+    height 4rem
+    border-top 1px solid #CCC
 </style>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import TitleBar from '@/components/TitleBar.vue';
 import Navigation from '@/components/Navigation.vue';
+import Player from '@/components/Player.vue';
+import { constants } from 'http2';
 
 @Component({
   components: {
     TitleBar,
     Navigation,
+    Player,
   },
 })
 export default class Main extends Vue {
-  public mounted() {
-    var div = document.createElement("div");
-    var support = ('draggable' in div) || ('ondrapstart' in div && 'ondrop' in div);
-    console.log(support);
+
+  public openDropFiles( e:object ): void {
+    let
+      player    = this.$refs.player,
+      fileList  = e.dataTransfer.files;
+
+    for( let index = 0; index < fileList.length; index++ ) {
+      let
+        file = fileList[ index ],
+        reader = new FileReader();
+
+      reader.readAsDataURL( file );
+      reader.onload = () => {
+        player.$refs.audio.src = reader.result;
+      }
+    }
+    player.changeMusic();
   }
-  public drop(event) {
-    console.log(event);
+  
+  public test(e) {
+    console.log(e)
+    console.log(e.dataTransfer.files);
+    console.log(e.dataTransfer.items);
+    
+  }
+
+  public tesa(e) {
+    e.preventDefault();
+    console.log(e.offsetX+' | '+e.offsetX)
+  }
+
+  public mounted() {
+    let box = this.$refs.window;
+    let bo = this.$refs.ad;
+    console.log(this.$refs)
+
+    // document.ondragover = function (e) {
+    //     e.preventDefault();  //只有在ondragover中阻止默认行为才能触发 ondrop 而不是 ondragleave
+    //   console.log('157');
+    // };
+    
+
+    document.ondragover = function (e) {
+      e.preventDefault();
+      // console.log(e.dataTransfer);
+    }
+    document.ondrop = function (e) {
+      e.preventDefault();  //阻止 document.ondrop的默认行为  *** 在新窗口中打开拖进的图片
+    };
   }
 }
 </script>
