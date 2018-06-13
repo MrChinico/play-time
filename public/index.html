@@ -6,11 +6,145 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title>play-time</title>
+    <style type="text/css">
+      *{
+        margin: 0px;
+        padding: 0px;
+      }
+      @font-face {
+        font-family: myFirstFont;
+        src: url('fonts/MyriadPro-Semibold.otf');
+      }
+      .aps {
+        position: absolute;
+        display: flex;
+        overflow: hidden;
+        align-items: center;
+        z-index: 1;
+      }
+      .triangle {
+        animation: b 0.5s ease forwards;
+        animation-delay: 3s;
+        transform: translateX(40px);
+        height: 0px;
+        border-width: 20px 0px 20px 40px;
+        margin-left: 60px;
+        border-color: transparent transparent transparent #fff;
+        border-style: solid;
+        z-index: -1;
+      }
+      .triangle + div {
+        background: #e00;
+        overflow: hidden;
+      }
+      .triangle + div >div {
+        animation: a 1s ease forwards;
+        animation-delay: 1s;
+        transform: translateX(-100%);
+        transition: 1s;
+      }
+      .triangle + div >div >div {
+        display: inline-block;
+      }
+      .triangle + div >div div+div div {
+        animation: c 0.5s ease-in forwards;
+        animation-delay: 3.25s;
+        margin-right: 40px;
+      }
+      #loading {
+        height: 100%;
+        background: #e00;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        color: #fff;
+      }
+      #loading div div {
+        font: 64px myFirstFont;
+      }
+      #loading{
+        animation: d .5s ease-in forwards;
+        animation-delay: 6.25s;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+      }
+      #app{
+        position: absolute;
+      }
+      body{
+        overflow: hidden;
+      }
+      @keyframes a {
+      0% {
+        transform: translateX(-100%);
+      }
+      50% {
+        transform: translateX(20px);
+      }
+      100% {
+        transform: translateX(0%);
+      }
+      }
+      @keyframes b {
+      0% {
+        transform: translateX(40px);
+      }
+      40% {
+        transform: translateX(-40px);
+      }
+      70% {
+        transform: translateX(0px);
+      }
+      100% {
+        transform: translateX(-20px);
+      }
+      }
+      @keyframes c {
+      0% {
+        transform: translateX(0%);
+      }
+      50% {
+        transform: translateX(30px);
+      }
+      100% {
+        transform: translateX(0%);
+      }
+      }
+      @keyframes d {
+        0%{
+          transform: translateY(0%);
+        }
+        20%{
+          transform: translateY(8px);
+        }
+        100%{
+          transform: translateY(-100%);
+        }
+      }
+      </style>
   </head>
   <body>
     <noscript>
       <strong>We're sorry but play-time doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
+    <div id="loading">
+      <div class="aps">
+        <div class="triangle"></div>
+        <div>
+          <div>
+            <div>Play</div>
+            <div>
+              <div>Time</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>

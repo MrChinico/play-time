@@ -7,7 +7,6 @@
       ref="window")
       Navigation
       router-view
-      div(ref="ad") 123
     Player(ref="player")
 </template>
 
@@ -36,6 +35,7 @@ a
   font-family newenfont,newfont 
   display flex 
   flex-flow column
+  background #fff
   min-width 800px
   height 100%
   .window
@@ -71,17 +71,13 @@ export default class Main extends Vue {
 
     for( let index = 0; index < fileList.length; index++ ) {
       let
-        file = fileList[ index ],
-        reader = new FileReader();
+        file = fileList[ index ];
 
-      reader.readAsDataURL( file );
-      reader.onload = () => {
-        player.$refs.audio.src = reader.result;
-      }
+        player.$refs.audio.src = file.path;
     }
     player.changeMusic();
   }
-  
+
   public test(e) {
     console.log(e)
     console.log(e.dataTransfer.files);

@@ -2,7 +2,15 @@ const {app, BrowserWindow} = require('electron')
 
 function init() {
   
-  win = new BrowserWindow({ minWidth:800, minHeight: 600, width: 800, height: 600, frame: false })
+  win = new BrowserWindow({
+    minWidth: 800,
+    minHeight: 600,
+    frame: false,
+    backgroundColor: '#e00',
+    webPreferences: {
+      webSecurity: false
+    }
+  })
   win.loadURL( 'http://localhost:8080/' )
   // win.loadFile( 'index.html' )
 }

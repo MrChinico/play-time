@@ -1,7 +1,7 @@
 <template lang="pug">
   div#title-bar
     div.left left
-    div.title {{countAlias}}{{appName}}
+    div.title {{appName}}
     div.right
       div
       div
