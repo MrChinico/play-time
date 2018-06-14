@@ -6,7 +6,7 @@ import store from './store';
 import axios from 'axios';
 import Icon from 'vue-svg-icon/Icon.vue';
 
-Vue.component('icon', Icon);  
+Vue.component( 'icon', Icon );
 
 Vue.config.productionTip = false;
 Vue.prototype.$http = axios;

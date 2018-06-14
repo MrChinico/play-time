@@ -64,10 +64,28 @@ import { constants } from 'http2';
 })
 export default class Main extends Vue {
 
-  public openDropFiles( e:object ): void {
+  private musicList = [];
+  public openDropFiles( e ): void {
     let
       player    = this.$refs.player,
       fileList  = e.dataTransfer.files;
+      this.musicList = [];
+    for( let file of fileList ) {
+      let size;
+      if( file.size < (1024 * 1024 * 1024) ) {
+        size = (file.size / 1024 / 1024).toFixed(2)+'MB';
+      }
+      this.musicList.push({
+        name: file.name,
+        type: file.type,
+        size: size,
+        path: file.path
+      });
+    }
+
+    this.$store.commit('musicListUpdate', this.musicList);
+    console.log(this.$store.state.musicList);
+    this.$router.push({path:'music-list'});
 
     for( let index = 0; index < fileList.length; index++ ) {
       let

@@ -43,8 +43,8 @@ import { mapState } from 'vuex';
 
 @Component({
   computed: mapState({
-    countAlias: state => state.baseInfo.appName,
-  })
+    countAlias: ( state ) => state.baseInfo.appName,
+  }),
 })
 export default class Main extends Vue {
   public appName = null;

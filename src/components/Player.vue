@@ -316,29 +316,21 @@ export default class Player extends Vue {
                                     Number( volumeSetBarStyle.paddingTop.replace( 'px', '' ) )
                                   ),
         volumeSetBarHeight      = Number( volumeSetBarStyle.height.replace( 'px', '' ) );
-        this.newVolumeProgress       = ( 1 - ( e.offsetY - Number( volumeSetBarStyle.paddingTop.replace( 'px', '' ) ) ) / volumeSetBarHeight ).toFixed( 2 );
 
-        if ( this.newVolumeProgress<0 ) {
-          this.newVolumeProgress = 0;
-        }
-        if ( this.newVolumeProgress>1 ) {
-          this.newVolumeProgress = 1;
-        }
+      this.newVolumeProgress  = ( 1 - ( e.offsetY - Number( volumeSetBarStyle.paddingTop.replace( 'px', '' ) ) ) / volumeSetBarHeight ).toFixed( 2 );
+
+      if ( this.newVolumeProgress < 0 ) {
+        this.newVolumeProgress = 0;
+      }
+      if ( this.newVolumeProgress > 1 ) {
+        this.newVolumeProgress = 1;
+      }
 
         // if (e.srcElement.className == 'time-bar') {
           // console.log(volumeSetBarProgress.style.height);
-          volumeSetBarProgress.style.height = ( this.newVolumeProgress * 100 ) + '%';
-          this.audioEl.volume = this.newVolumeProgress;
-        // }
-
-
-        console.log(this.newVolumeProgress * 100)
-        // console.log(volumeSetBarHeight)
-        // // console.log(newVolumeProgress )
-        // console.log(e.offsetY )
-        // console.log(volumeSetBarHeight )
-        // console.log(volumeSetBarStyle.height )
-        // console.log(e)
+      volumeSetBarProgress.style.height = ( this.newVolumeProgress * 100 ) + '%';
+      this.audioEl.volume = this.newVolumeProgress;
+      
     }
   }
 

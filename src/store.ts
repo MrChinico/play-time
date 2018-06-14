@@ -6,11 +6,14 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     baseInfo: {
-      appName: 'PlayTime'
-    }
+      appName: 'PlayTime',
+    },
+    musicList: [],
   },
   mutations: {
-
+    musicListUpdate( state, musicList ){
+      state.musicList = musicList;
+    }
   },
   actions: {
 

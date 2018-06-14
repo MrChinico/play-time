@@ -7,6 +7,7 @@
 #navigation
   width 200px
   background #EEE
+  border-right 1px solid #CCC
   >a
     display block
     padding .5rem 0rem
@@ -22,9 +23,9 @@ import { Component, Vue } from 'vue-property-decorator';
 export default class Main extends Vue {
   public navigations = [
     {name: '本地音频', path:'/local-audio'},
-    {name: '本地视频', path:'/'},
-    {name: '网络音频', path:'/network-audio'},
-    {name: '网络视频', path:'/'},
+    {name: '播放列表', path:'/music-list'},
+    // {name: '网络音频', path:'/network-audio'},
+    // {name: '网络视频', path:'/'},
     {name: '设置', path:'/'},
   ];
 }
