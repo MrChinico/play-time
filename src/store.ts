@@ -11,9 +11,9 @@ export default new Vuex.Store({
     musicList: [],
   },
   mutations: {
-    musicListUpdate( state, musicList ){
+    musicListUpdate( state, musicList ) {
       state.musicList = musicList;
-    }
+    },
   },
   actions: {
 

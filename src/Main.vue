@@ -54,6 +54,7 @@ import TitleBar from '@/components/TitleBar.vue';
 import Navigation from '@/components/Navigation.vue';
 import Player from '@/components/Player.vue';
 import { constants } from 'http2';
+import { Utils } from '@/utils/utils.ts';
 
 @Component({
   components: {
@@ -65,34 +66,41 @@ import { constants } from 'http2';
 export default class Main extends Vue {
 
   private musicList = [];
-  public openDropFiles( e ): void {
+  public openDropFiles( event: Event ): void {
     let
       player    = this.$refs.player,
-      fileList  = e.dataTransfer.files;
-      this.musicList = [];
+      fileList  = event.dataTransfer.files;
+
+    this.musicList = [];
+
     for( let file of fileList ) {
-      let size;
-      if( file.size < (1024 * 1024 * 1024) ) {
-        size = (file.size / 1024 / 1024).toFixed(2)+'MB';
+      let
+        size,
+        audio = document.createElement('audio');
+      // audio.oncanplay = this.regMusicList( this.$event, file)
+      audio.oncanplay = ( event ) => {
+        this.musicList.push({
+          name: file.name,
+          type: Utils.toMediaType( file.type ),
+          size: Utils.byteToMegabytes( file.size ),
+          path: file.path,
+          time: Utils.secondToMinute( event.path[0].duration ),
+          isplay: false
+        });
       }
-      this.musicList.push({
-        name: file.name,
-        type: file.type,
-        size: size,
-        path: file.path
-      });
+      audio.src = file.path;
     }
 
     this.$store.commit('musicListUpdate', this.musicList);
     console.log(this.$store.state.musicList);
     this.$router.push({path:'music-list'});
 
-    for( let index = 0; index < fileList.length; index++ ) {
-      let
-        file = fileList[ index ];
+    // for( let index = 0; index < fileList.length; index++ ) {
+    //   let
+    //     file = fileList[ index ];
 
-        player.$refs.audio.src = file.path;
-    }
+    //     player.$refs.audio.src = file.path;
+    // }
     player.changeMusic();
   }
 
@@ -112,6 +120,7 @@ export default class Main extends Vue {
     let box = this.$refs.window;
     let bo = this.$refs.ad;
     console.log(this.$refs)
+    
 
     // document.ondragover = function (e) {
     //     e.preventDefault();  //只有在ondragover中阻止默认行为才能触发 ondrop 而不是 ondragleave

@@ -32,7 +32,7 @@
           div.background
             div.progress(ref="volumeProgress")
               span
-      div.play-mode
+      div.play-mode(@click="setPlayMode")
       div.list
     audio(@playing = "test" ref="audio")
     //- video(ref="video")
@@ -173,6 +173,8 @@
             top -8px
             border 4px solid #AAA
             border-radius 50%
+    .play-mode
+      background #f00
     >div
       margin-right 8px
       width 24px
@@ -188,6 +190,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { setTimeout } from 'timers';
+import { Utils } from '@/utils/utils';
 
 @Component
 export default class Player extends Vue {
@@ -203,6 +206,7 @@ export default class Player extends Vue {
   private newVolumeProgress               = null;
   private duration: string = '00:00';
   private current: string = '00:00';
+  private playMode: number = 0;
 
 
   public mounted(){
@@ -210,22 +214,25 @@ export default class Player extends Vue {
     this.progressEl = this.$refs.progress;
     this.bufferEl   = this.$refs.buffer;
   }
-  public getProgressTime( time ): string {
-    let m=0, s=0;
-    m = Math.floor(Number(time / 60));
-    s = Math.floor(Number(time % 60));
-    console.log(time)
-    console.log('hhh')
-    if( m < 10 ){
-      m = '0' + m;
+
+  public setPlayMode(): void {
+    let audioEl = this.$refs.audio;
+    switch( ++this.playMode ) {
+      default:
+        this.playMode = 0;
+      case 0:
+        audioEl.loop = '';
+        console.log(this.playMode)
+        break;
+      case 1:
+        audioEl.loop = 'loop';
+        console.log(this.playMode)
+        break;
     }
-    if( s < 10 ){
-      s = '0' + s;
-    }
-    return m + ':' + s
   }
+
   public test() {
-    this.duration = this.getProgressTime( this.audioEl.duration )
+    this.duration = Utils.secondToMinute( this.audioEl.duration );
     this.playing = true;
     this.updatePlayProgress();
   }
@@ -249,7 +256,7 @@ export default class Player extends Vue {
       this.bufferEl.style.width = (this.audioEl.buffered.end(this.audioEl.buffered.length - 1) / this.audioEl.duration).toFixed(2) * 100 + '%';
     }
     this.progressEl.style.width = ((this.audioEl.currentTime / this.audioEl.duration)*100).toFixed(2) + '%';
-    this.current = this.getProgressTime( this.audioEl.currentTime );
+    this.current = Utils.secondToMinute( this.audioEl.currentTime );
     // this.buffer.style.width = ((this.audioEl.currentTime / this.audioEl.duration)*100).toFixed(2) + '%';
     // console.log(this.audioEl.duration)
     if ( this.playing ) {
@@ -281,7 +288,7 @@ export default class Player extends Vue {
           this.newProgress = 1;
         }
 
-        this.current = this.getProgressTime( this.audioEl.duration * this.newProgress );
+        this.current = Utils.secondToMinute( this.audioEl.duration * this.newProgress );
 
         if (e.srcElement.className == 'time-bar') {
           timeBarProgress.style.width = ( this.newProgress * 100 ) + '%';
